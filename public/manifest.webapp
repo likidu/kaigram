@@ -1,34 +1,42 @@
 {
-  "name": "Kaigram",
-  "description": "A Telegram for your KaiOS device",
-  "version": "0.1.0",
-  "launch_path": "/index.html",
-  "developer": {
-    "name": "Liki Du",
-    "url": "https://liya.design"
-  },
-  "origin": "app://kaigram.liya.design",
-  "permissions": {
-    "audio-channel-content": {
-      "description": "Required to play audio in the background."
+    "name": "Kaigram",
+    "description": "A Telegram for your KaiOS device",
+    "version": "0.1.0",
+    "launch_path": "/index.html",
+    "icons": {
+        "256": "/assets/icons/td_icon.png",
+        "128": "/assets/icons/td_icon.png",
+        "64": "/assets/icons/td_icon.png",
+        "48": "/assets/icons/td_icon.png",
+        "32": "/assets/icons/td_icon.png",
+        "24": "/assets/icons/td_icon.png"
     },
-    "browser": {
-      "description": "Required to authenticate with Azure Active Directory."
+    "developer": {
+        "name": "Liki Du",
+        "url": "https://liya.design"
     },
-    "systemXHR": {
-      "description": "Required to download podcasts and perform other vital functions."
+    "origin": "app://kaigram.liya.design",
+    "permissions": {
+        "audio-channel-content": {
+            "description": "Required to play audio in the background."
+        },
+        "browser": {
+            "description": "Required to authenticate with Azure Active Directory."
+        },
+        "systemXHR": {
+            "description": "Required to download podcasts and perform other vital functions."
+        },
+        "desktop-notification": {
+            "description": "Required to display episode information and playback controls in the notification panel."
+        },
+        "device-storage:sdcard": {
+            "access": "readwrite",
+            "description": "Required to read and write podcasts episodes to external storage."
+        },
+        "serviceworker": {
+            "description": "Needed for assocating service worker."
+        }
     },
-    "desktop-notification": {
-      "description": "Required to display episode information and playback controls in the notification panel."
-    },
-    "device-storage:sdcard": {
-      "access": "readwrite",
-      "description": "Required to read and write podcasts episodes to external storage."
-    },
-    "serviceworker": {
-      "description": "Needed for assocating service worker."
-    }
-  },
-  "default_locale": "en",
-  "cursor": false
+    "default_locale": "en",
+    "cursor": false
 }
