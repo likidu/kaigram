@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "target": "es2015"
+  },
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "__sapper__/*", "dist/*.html|png"],
+}
