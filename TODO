@@ -1,0 +1,18 @@
+# TODO
+
+## PoC
+
+Goal is to learn Airgram, creating component using Svelte / Sapper and use stores to save the state
+
+- [ ] Authentication
+- [ ] List all chats
+
+## Phrase 1
+
+- [ ] Message window
+- [ ] Multimedia: image, sound, video
+
+## Phrase 2
+
+- [ ] Instant view
+- [ ] KaiOS style
