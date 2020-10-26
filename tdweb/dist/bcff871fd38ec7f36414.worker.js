@@ -47,7 +47,7 @@
 /******/ 		promises.push(Promise.resolve().then(function() {
 /******/ 			// "1" is the signal for "already loaded"
 /******/ 			if(!installedChunks[chunkId]) {
-/******/ 				importScripts(__webpack_require__.p + "" + chunkId + "." + "a0c753d9cd9b4fb6dcac" + ".worker.js");
+/******/ 				importScripts(__webpack_require__.p + "" + chunkId + "." + "bcff871fd38ec7f36414" + ".worker.js");
 /******/ 			}
 /******/ 		}));
 /******/ 		return Promise.all(promises);
@@ -5294,7 +5294,7 @@ function () {
       regenerator_default.a.mark(function _callee16(options) {
         var _this3 = this;
 
-        var mode, FS_promise, tdfs_promise;
+        var FS_promise, tdfs_promise;
         return regenerator_default.a.wrap(function _callee16$(_context16) {
           while (1) {
             switch (_context16.prev = _context16.next) {
@@ -5310,8 +5310,8 @@ function () {
                 //await this.testLocalForage();
                 logger.setVerbosity(options.jsLogVerbosityLevel);
                 this.wasInit = true;
-                options = options || {};
-                mode = options.mode || 'asmjs';
+                options = options || {}; // const mode = options.mode || 'asmjs';
+
                 FS_promise = new Promise(function (resolve) {
                   _this3.onFS = resolve;
                 });
@@ -5324,10 +5324,10 @@ function () {
 
                 logger.info('load TdModule'); // this.TdModule = await loadTdlib(mode, this.onFS, options.wasmUrl);
 
-                _context16.next = 13;
+                _context16.next = 12;
                 return loadTdlibAsmjs(this.onFS);
 
-              case 13:
+              case 12:
                 this.TdModule = _context16.sent;
                 logger.info('got TdModule');
                 this.td_functions = {
@@ -5367,28 +5367,28 @@ function () {
                 this.callback({
                   '@type': 'inited'
                 });
-                _context16.next = 26;
+                _context16.next = 25;
                 return new Promise(function (resolve) {
                   _this3.onStart = resolve;
                 });
 
-              case 26:
+              case 25:
                 this.isStarted = true;
                 logger.info('may start now');
 
                 if (!this.isClosing) {
-                  _context16.next = 30;
+                  _context16.next = 29;
                   break;
                 }
 
                 return _context16.abrupt("return");
 
-              case 30:
+              case 29:
                 logger.info('FS start init');
-                _context16.next = 33;
+                _context16.next = 32;
                 return tdfs_promise;
 
-              case 33:
+              case 32:
                 this.tdfs = _context16.sent;
                 logger.info('FS inited');
                 this.callback({
@@ -5429,7 +5429,7 @@ function () {
                 this.flushPendingQueries();
                 this.receive();
 
-              case 45:
+              case 44:
               case "end":
                 return _context16.stop();
             }
