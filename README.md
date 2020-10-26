@@ -8,6 +8,96 @@ Tested using Firefox 59 with asm.js enabled.
 
 ## Build
 
+### TDLib
+
+WSL2 with Ubuntu 20.04, using Clang.
+
+* Install build environment
+
+    ```bash
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y make git zlib1g-dev libssl-dev gperf php clang-10 libc++-dev libc++abi-dev
+    ```
+
+* Install latest CMake from [https://apt.kitware.com/](https://apt.kitware.com/)
+
+* Build TDLib
+
+    ```bash
+    gh repo clone tdlib/td.git
+
+    cd td
+
+    rm -rf build && mkdir build && cd build
+
+    export CXXFLAGS="-stdlib=libc++"
+
+    CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib ..
+
+    cmake --build . --target 
+    
+    cd ../..
+
+    ls -l td/tdlib
+    ```
+
+### TDWeb with only ASM.js
+
+Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/master/example/web) to build the **tdweb** for **asm.js**
+
+* Install [Emscripten SDK](https://github.com/emscripten-core/emsdk)
+
+    ```bash
+    gh repo clone emscripten-core/emsdk
+
+    cd emsdk
+
+    ./emsdk install 2.0.6
+
+    ./emsdk activate 2.0.6
+
+    source ./emsdk_env.sh
+    ```
+
+* Comment out those WASM lines in `build-tdlib.sh` and `copy-tdlib.sh`.
+
+* Comment out those WASM lines in [`tdweb/src/worker.js`](https://github.com/tdlib/td/blob/master/example/web/tdweb/src/worker.js). Also remember to update the default mode:
+
+    ```js
+    # From
+    const mode = options.mode || 'wasm';
+    # To
+    const mode = options.mode || 'asmjs';
+    ```
+
+* Change `packages.json` to enable ASM.js by default:
+
+    ```js
+    # From
+    "WebAssembly": true
+    # To
+    "WebAssembly": false
+    ```
+
+* Edit `build-openssl.sh` to use OpenSSL v1.1.1h, and also applies to `build-tdlib.sh` as it looks the 1.1.0j could not find the `bn.h` file.
+
+* Build the tdweb with only ASM.js support
+
+    ```bash
+    cd <path to TDLib sources>/example/web
+
+    ./build-openssl.sh
+
+    CC=/usr/bin/clang-10 CXX=/usr/bin/clang++-10 ./build-tdlib.sh
+
+    ./copy-tdlib.sh
+
+    ./build-tdweb.sh
+    ```
+
+* The built package is now located in the `tdweb` directory.
+
+
 ### tdweb
 
 _Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)_
