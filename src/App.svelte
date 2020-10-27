@@ -19,7 +19,7 @@
 	client.action = () => started = true;
     setContext('tgClient', new Tg()); */
 
-    let started = false
+    let logged = false
 
     const airgram = new Airgram({
         apiId,
@@ -31,7 +31,8 @@
     airgram.use(
         new Auth({
             code: () => window.prompt('Please enter the secret code:') || '',
-            phoneNumber: () => window.prompt('Please enter your phone number:') || '',
+            phoneNumber: () =>
+                window.prompt('Please enter your phone number:') || '',
             password: () => window.prompt('Please enter your password:') || '',
         }),
     )
@@ -79,11 +80,10 @@
 
 <main>
     <h1>Svelte TdLib starter</h1>
-    <Main />
-    {#if started}
-        <p>TdLib client was started</p>
+    {#if logged}
+        <Main />
     {:else}
-        <p>TdLib client is starting...</p>
+        <p>Refresh the page to log in...</p>
     {/if}
     <p>
         Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
