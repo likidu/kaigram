@@ -63,11 +63,41 @@ Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/maste
 
 * Comment out those WASM lines in `build-tdlib.sh` and `copy-tdlib.sh`.
 
-* Comment out those WASM lines in [`tdweb/src/worker.js`](https://github.com/tdlib/td/blob/master/example/web/tdweb/src/worker.js). Also remember to update the default mode:
+* Comment out those WASM lines in [`worker.js`](https://github.com/tdlib/td/blob/master/example/web/tdweb/src/worker.js).
 
     ```diff
-    - const mode = options.mode || 'wasm';
-    + const mode = options.mode || 'asmjs';
+    example/web/tdweb/src/worker.js
+
+    - import { instantiateAny } from './wasm-utils.js';
+
+    - import td_wasm_release from './prebuilt/release/td_wasm.wasm';
+
+    - const tdlibVersion = 6;
+
+    ...
+
+    - async function loadTdlibWasm(onFS, wasmUrl) {
+    -   ...
+    - }
+
+    ...
+
+    - async function loadTdlib(mode, onFS, wasmUrl) {
+    -   ...
+    - }
+    + async function loadTdlib(onFS) {
+    +   return loadTdlibAsmjs(onFS);
+    + }
+
+    ...
+
+    async init(options) {
+        ...
+        - const mode = options.mode || 'asmjs';
+        ...
+        - this.TdModule = await loadTdlib(mode, this.onFS, options.wasmUrl);
+        + this.TdModule = await loadTdlib(this.onFS);
+    }
     ```
 
 * Change `packages.json` to enable ASM.js by default:
@@ -118,7 +148,7 @@ Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/maste
 
 ## Debug
 
-[Debugger for Firefox] extension in VSCode no longer supports Firefox version less than v68. We need to download and install manually [v2.4.0](https://ms-vscode.gallery.vsassets.io/_apis/public/gallery/publisher/firefox-devtools/extension/vscode-firefox-debug/2.4.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage) to debug.
+[Debugger for Firefox](https://marketplace.visualstudio.com/items?itemName=firefox-devtools.vscode-firefox-debug) extension in VSCode no longer supports Firefox version less than 68. We need to download and install manually [v2.4.0](https://ms-vscode.gallery.vsassets.io/_apis/public/gallery/publisher/firefox-devtools/extension/vscode-firefox-debug/2.4.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage) to debug.
 
 After downloaded, rename the extension name to `.vsix` and manually install it in VSCode.
 
