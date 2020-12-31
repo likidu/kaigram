@@ -10,7 +10,8 @@
             "request": "launch",
             "reAttach": true,
             "url": "http://localhost:5000",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "firefoxArgs": ["--devtools"]
         },
         {
             "name": "Attach",

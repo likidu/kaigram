@@ -4,9 +4,11 @@ A Telegram for your KaiOS device
 
 ---
 
-Tested using Firefox 59 with asm.js enabled.
+Tested using [Firefox 59.0.3](https://ftp.mozilla.org/pub/firefox/releases/59.0.3/) with asm.js enabled. v59 the latest version which is known to have Mozilla's Boot to Gecko (B2G) supported.
 
-## Build
+## Build TDWeb with only ASM.js
+
+Below steps use `gh` which is Github CLI, but of course you can use normal `git` instead.
 
 ### TDLib
 
@@ -16,7 +18,7 @@ WSL2 with Ubuntu 20.04, using Clang.
 
     ```bash
     sudo apt update && sudo apt upgrade -y
-    sudo apt install -y make git zlib1g-dev libssl-dev gperf php clang-10 libc++-dev libc++abi-dev
+    sudo apt install -y make git ninja-build zlib1g-dev libssl-dev gperf php clang-10 libc++-dev libc++abi-dev
     ```
 
 * Install latest CMake from [https://apt.kitware.com/](https://apt.kitware.com/)
@@ -24,7 +26,7 @@ WSL2 with Ubuntu 20.04, using Clang.
 * Build TDLib
 
     ```bash
-    gh repo clone tdlib/td.git
+    gh repo clone tdlib/td
 
     cd td
 
@@ -41,7 +43,7 @@ WSL2 with Ubuntu 20.04, using Clang.
     ls -l td/tdlib
     ```
 
-### TDWeb with only ASM.js
+### TDWeb
 
 Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/master/example/web) to build the **tdweb** for **asm.js**
 
@@ -63,23 +65,40 @@ Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/maste
 
 * Comment out those WASM lines in [`tdweb/src/worker.js`](https://github.com/tdlib/td/blob/master/example/web/tdweb/src/worker.js). Also remember to update the default mode:
 
-    ```js
-    # From
-    const mode = options.mode || 'wasm';
-    # To
-    const mode = options.mode || 'asmjs';
+    ```diff
+    - const mode = options.mode || 'wasm';
+    + const mode = options.mode || 'asmjs';
     ```
 
 * Change `packages.json` to enable ASM.js by default:
 
-    ```js
-    # From
-    "WebAssembly": true
-    # To
-    "WebAssembly": false
+    ```diff
+    - "WebAssembly": true
+    + "WebAssembly": false
     ```
 
 * Edit `build-openssl.sh` to use OpenSSL v1.1.1h, and also applies to `build-tdlib.sh` as it looks the 1.1.0j could not find the `bn.h` file.
+
+    ```diff
+    # build-openssl.sh
+
+    - OPENSSL=OpenSSL_1_1_0j
+    + OPENSSL=OpenSSL_1_1_1h
+    ```
+
+    ```diff
+    example/web/build-tdlib.sh
+
+    OPENSSL_OPTIONS="-DOPENSSL_FOUND=1 \
+        -DOPENSSL_ROOT_DIR=\"$OPENSSL_ROOT\" \
+        -DOPENSSL_INCLUDE_DIR=\"$OPENSSL_ROOT/include\" \
+        -DOPENSSL_CRYPTO_LIBRARY=\"$OPENSSL_CRYPTO_LIBRARY\" \
+        -DOPENSSL_SSL_LIBRARY=\"$OPENSSL_SSL_LIBRARY\" \
+        -DOPENSSL_LIBRARIES=\"$OPENSSL_SSL_LIBRARY;$OPENSSL_CRYPTO_LIBRARY\" \
+    -   -DOPENSSL_VERSION=\"1.1.0j\""
+    +   -DOPENSSL_VERSION=\"1.1.1h\""
+    ```
+
 
 * Build the tdweb with only ASM.js support
 
@@ -96,6 +115,12 @@ Refer to the `tdlib/example/web` [README](https://github.com/tdlib/td/tree/maste
     ```
 
 * The built package is now located in the `tdweb` directory.
+
+## Debug
+
+[Debugger for Firefox] extension in VSCode no longer supports Firefox version less than v68. We need to download and install manually [v2.4.0](https://ms-vscode.gallery.vsassets.io/_apis/public/gallery/publisher/firefox-devtools/extension/vscode-firefox-debug/2.4.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage) to debug.
+
+After downloaded, rename the extension name to `.vsix` and manually install it in VSCode.
 
 
 ### tdweb
