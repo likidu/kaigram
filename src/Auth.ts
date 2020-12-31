@@ -5,7 +5,7 @@ import {
     authIndependentMethods,
     AUTHORIZATION_STATE,
     MethodName,
-    UPDATE,
+    UPDATE
 } from '@airgram/constants'
 import {
     ApiResponse,
@@ -21,8 +21,8 @@ import {
     Ok,
     OkUnion,
     RegisterUserParams,
-    TdProvider,
-    UpdateAuthorizationState,
+    Provider,
+    UpdateAuthorizationState
 } from '@airgram/core'
 
 interface LoginDeferred {
@@ -92,10 +92,7 @@ export class Auth {
     }
 
     public get isAuthorized(): boolean {
-        return !!(
-            this.authState &&
-            this.authState._ === AUTHORIZATION_STATE.authorizationStateReady
-        )
+        return !!(this.authState && this.authState._ === AUTHORIZATION_STATE.authorizationStateReady)
     }
 
     public get isBot(): boolean {
@@ -117,22 +114,18 @@ export class Auth {
                 }
                 return next()
             },
-            Composer.filter(
-                (ctx: { update?: UpdateAuthorizationState }) =>
-                    !('update' in ctx) ||
-                    !ctx.update ||
-                    ctx.update._ !== UPDATE.updateAuthorizationState ||
-                    !this.handleUpdateState(ctx.update),
+            Composer.filter((ctx: | { update?: UpdateAuthorizationState }) => !('update' in ctx) ||
+                !ctx.update ||
+                ctx.update._ !== UPDATE.updateAuthorizationState ||
+                !this.handleUpdateState(ctx.update)
             ),
             Composer.optional(
                 (ctx: Context) =>
                     !this.isAuthorized &&
                     !authMethods.includes(ctx._ as MethodName) &&
-                    !authIndependentMethods.includes(
-                        ctx._ as AuthIndependentMethodName,
-                    ),
-                (_ctx, next) => this.login().then(next),
-            ),
+                    !authIndependentMethods.includes(ctx._ as AuthIndependentMethodName),
+                (_ctx, next) => this.login().then(next)
+            )
         ])
     }
 
@@ -147,33 +140,29 @@ export class Auth {
     }
 
     private async askPhoneNumber(): Promise<string> {
-        return this.ask('phoneNumber').then(async (phoneNumber) => {
-            if (!phoneNumber) {
-                throw new Error('Phone number is not defined')
-            }
-            if (
-                this.invalidPhoneNumbers.has(phoneNumber) ||
-                !/^\+?\d{10,}$/.test(phoneNumber.trim())
-            ) {
-                this.invalidPhoneNumbers.add(phoneNumber)
-                delete this.answers.phoneNumber
-                throw new Error('Invalid phone number')
-            }
-            return phoneNumber
-        })
+        return this.ask('phoneNumber')
+            .then(async (phoneNumber) => {
+                if (!phoneNumber) {
+                    throw new Error('Phone number is not defined')
+                }
+                if (this.invalidPhoneNumbers.has(phoneNumber) || !/^\+?\d{10,}$/.test(phoneNumber.trim())) {
+                    this.invalidPhoneNumbers.add(phoneNumber)
+                    delete this.answers.phoneNumber
+                    throw new Error('Invalid phone number')
+                }
+                return phoneNumber
+            })
     }
 
-    private async checkAuthenticationPassword(): Promise<
-        ApiResponse<CheckAuthenticationPasswordParams, Ok>
-    > {
+    private async checkAuthenticationPassword(): Promise<ApiResponse<CheckAuthenticationPasswordParams, Ok>> {
         return this.airgram.api.checkAuthenticationPassword({
-            password: await this.ask('password'),
+            password: await this.ask('password')
         })
     }
 
     private async fatalError(error: Error): Promise<false> {
         console.error(`[Airgram Auth] quit due an error: "${error.message}"`)
-        if (this.airgram.provider instanceof TdProvider) {
+        if (this.airgram.provider instanceof Provider) {
             await this.airgram.provider.destroy()
         }
         return false
@@ -192,11 +181,8 @@ export class Auth {
                     this.invalidPhoneNumbers.add(this.answers.phoneNumber)
                     delete this.answers.phoneNumber
                 }
-                promise = this.askPhoneNumber().then((phoneNumber) =>
-                    this.airgram.api.setAuthenticationPhoneNumber({
-                        phoneNumber,
-                    }),
-                )
+                promise = this.askPhoneNumber()
+                    .then((phoneNumber) => this.airgram.api.setAuthenticationPhoneNumber({ phoneNumber }))
                 break
             }
             case 'PHONE_CODE_EMPTY':
@@ -206,9 +192,7 @@ export class Auth {
                     this.attempt += 1
                     promise = this.sendCode()
                 } else {
-                    return this.fatalError(
-                        new Error('Exceeded the limit of failed attempts'),
-                    )
+                    return this.fatalError(new Error('Exceeded the limit of failed attempts'))
                 }
                 break
             }
@@ -217,9 +201,7 @@ export class Auth {
                     this.attempt += 1
                     promise = this.checkAuthenticationPassword()
                 } else {
-                    return this.fatalError(
-                        new Error('Exceeded the limit of failed attempts'),
-                    )
+                    return this.fatalError(new Error('Exceeded the limit of failed attempts'))
                 }
                 break
             }
@@ -228,21 +210,17 @@ export class Auth {
             }
         }
         return promise
-            ? promise
-                  .then(({ response }) => {
-                      if (isError(response)) {
-                          this.handleError(response)
-                          return false
-                      }
-                      return true
-                  })
-                  .catch((error: Error) => this.fatalError(error))
+            ? promise.then(({ response }) => {
+                if (isError(response)) {
+                    this.handleError(response)
+                    return false
+                }
+                return true
+            }).catch((error: Error) => this.fatalError(error))
             : true
     }
 
-    private async handleUpdateState({
-        authorizationState,
-    }: UpdateAuthorizationState): Promise<boolean> {
+    private async handleUpdateState({ authorizationState }: UpdateAuthorizationState): Promise<boolean> {
         this.attempt = 0
         this.authState = authorizationState
         let promise: Promise<ApiResponse<any, Ok>> | null = null
@@ -251,15 +229,11 @@ export class Auth {
             case AUTHORIZATION_STATE.authorizationStateWaitPhoneNumber: {
                 if (this.isBot) {
                     const token = await this.ask('token')
-                    promise = this.airgram.api.checkAuthenticationBotToken({
-                        token,
-                    })
+                    promise = this.airgram.api.checkAuthenticationBotToken({ token })
                 } else {
-                    promise = this.askPhoneNumber().then((phoneNumber) =>
-                        this.airgram.api.setAuthenticationPhoneNumber({
-                            phoneNumber,
-                        }),
-                    )
+                    promise = this.askPhoneNumber().then((phoneNumber) => this.airgram.api.setAuthenticationPhoneNumber({
+                        phoneNumber
+                    }))
                 }
                 break
             }
@@ -288,15 +262,13 @@ export class Auth {
         }
 
         return promise
-            ? promise
-                  .then(({ response }) => {
-                      if (isError(response)) {
-                          this.handleError(response)
-                          return false
-                      }
-                      return true
-                  })
-                  .catch((error: Error) => this.fatalError(error))
+            ? promise.then(({ response }) => {
+                if (isError(response)) {
+                    this.handleError(response)
+                    return false
+                }
+                return true
+            }).catch((error: Error) => this.fatalError(error))
             : true
     }
 
@@ -309,39 +281,31 @@ export class Auth {
             })
             this.deferred = deferred as LoginDeferred
             if (!this.authState) {
-                const {
-                    response: authState,
-                } = await this.airgram.api.getAuthorizationState()
+                const { response: authState } = await this.airgram.api.getAuthorizationState()
                 this.authState = authState || null
             }
         }
-        return Promise.resolve(
-            this.deferred ? this.deferred.promise : undefined,
-        )
+        return Promise.resolve(this.deferred ? this.deferred.promise : undefined)
     }
 
-    private async registerUser(): Promise<
-        ApiResponse<RegisterUserParams, OkUnion>
-    > {
+    private async registerUser(): Promise<ApiResponse<RegisterUserParams, OkUnion>> {
         const firstName = await this.ask('firstName')
         if (!firstName) {
             throw new Error('First name can not be empty.')
         }
         return this.airgram.api.registerUser({
             firstName,
-            lastName: (await this.ask('lastName')) || undefined,
+            lastName: (await this.ask('lastName')) || undefined
         })
     }
 
-    private async sendCode(): Promise<
-        ApiResponse<CheckAuthenticationCodeParams, OkUnion>
-    > {
+    private async sendCode(): Promise<ApiResponse<CheckAuthenticationCodeParams, OkUnion>> {
         const code = await this.ask('code')
         if (!code || !/^\d+$/.test(code)) {
             throw new Error('Invalid authorization code')
         }
         return this.airgram.api.checkAuthenticationCode({
-            code,
+            code
         })
     }
 }
