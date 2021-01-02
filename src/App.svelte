@@ -1,6 +1,6 @@
 <script lang="ts">
     import { setContext } from 'svelte'
-    import { Airgram } from '@airgram/web'
+    import { Airgram } from './airgram'
     import { Auth } from './Auth'
     import {
         apiHash,
@@ -86,7 +86,8 @@
         <p>Refresh the page to log in...</p>
     {/if}
     <p>
-        Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-        how to build Svelte apps.
+        Visit the
+        <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
+        to learn how to build Svelte apps.
     </p>
 </main>
