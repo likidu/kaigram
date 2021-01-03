@@ -1,9 +1,25 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    // "target": "es2016"
+    "target": "es6",
+    "module": "es6",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "lib": [
+      "esnext",
+      "webworker",
+      "scripthost",
+      "DOM"
+    ]
   },
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "dist/*.html|png"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "dist/*.html|png"
+  ],
 }
