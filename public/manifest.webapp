@@ -1,6 +1,7 @@
 {
     "name": "Kaigram",
     "description": "A Telegram for your KaiOS device",
+    "type": "web",
     "version": "0.1.0",
     "launch_path": "/index.html",
     "icons": {
@@ -17,6 +18,14 @@
     },
     "origin": "app://kaigram.liya.design",
     "permissions": {
+        "tdlib": {
+            "access": "readwrite",
+            "description": "Read and modify my data store"
+        },
+        "/tdlib/dbfs": {
+            "access": "readwrite",
+            "description": "Read and modify my data store"
+        },
         "audio-channel-content": {
             "description": "Required to play audio in the background."
         },
