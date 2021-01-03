@@ -5,14 +5,23 @@
 Goal is to learn Airgram, creating component using Svelte / Sapper and use stores to save the state
 
 - [ ] Authentication
-- [ ] List all chats
+- [ ] List all chats (Dialogs)
+- [ ] Basic routing
 
 ## Phrase 1
 
 - [ ] Message window
-- [ ] Multimedia: image, sound, video
+- [ ] KaiOS style
 
 ## Phrase 2
 
 - [ ] Instant view
-- [ ] KaiOS style
+- [ ] Multimedia: image, sound, video
+
+## Phrase 3
+
+- [ ] i18n (Localization store)
+
+```json
+"tdweb": "file:./tdweb",
+```

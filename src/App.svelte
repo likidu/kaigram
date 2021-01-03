@@ -1,6 +1,6 @@
 <script lang="ts">
     import { setContext } from 'svelte'
-    import { Airgram } from '@airgram/web'
+    import { Airgram } from './airgram'
     import { Auth } from './Auth'
     import {
         apiHash,
@@ -8,6 +8,8 @@
         jsLogVerbosityLevel,
         logVerbosityLevel,
     } from './config'
+
+    import Main from './components/Main.svelte'
 
     /* 	import { Tg } from './Tg';
 
@@ -17,7 +19,7 @@
 	client.action = () => started = true;
     setContext('tgClient', new Tg()); */
 
-    let started = false
+    let logged = false
 
     const airgram = new Airgram({
         apiId,
@@ -78,13 +80,14 @@
 
 <main>
     <h1>Svelte TdLib starter</h1>
-    {#if started}
-        <p>TdLib client was started</p>
+    {#if logged}
+        <Main />
     {:else}
-        <p>TdLib client is starting...</p>
+        <p>Refresh the page to log in...</p>
     {/if}
     <p>
-        Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-        how to build Svelte apps.
+        Visit the
+        <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
+        to learn how to build Svelte apps.
     </p>
 </main>
