@@ -21,3 +21,7 @@ Goal is to learn Airgram, creating component using Svelte / Sapper and use store
 ## Phrase 3
 
 - [ ] i18n (Localization store)
+
+```json
+"tdweb": "file:./tdweb",
+```
