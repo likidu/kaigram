@@ -1,7 +1,6 @@
 <script lang="ts">
     import { setContext } from 'svelte'
-    import { Router, Route } from 'svelte-routing'
-    import { Airgram } from './airgram'
+    import { Airgram, Auth } from './airgram'
     import {
         apiHash,
         apiId,
@@ -10,15 +9,6 @@
     } from './config'
 
     import Main from './routes/Main.svelte'
-    import Login from './routes/Login.svelte'
-
-    /* 	import { Tg } from './Tg';
-
-	let client = new Tg();
-	let started = false;
-
-	client.action = () => started = true;
-    setContext('tgClient', new Tg()); */
 
     const airgram = new Airgram({
         apiId,
@@ -26,6 +16,15 @@
         jsLogVerbosityLevel,
         logVerbosityLevel,
     })
+
+    airgram.use(
+        new Auth({
+            code: () => window.prompt('Please enter the secret code:') || '',
+            phoneNumber: () =>
+                window.prompt('Please enter your phone number:') || '',
+            password: () => window.prompt('Please enter your password:') || '',
+        }),
+    )
 
     airgram.use(async (ctx, next) => {
         if ('request' in ctx) {
@@ -46,24 +45,4 @@
     setContext('airgram', airgram)
 </script>
 
-<main>
-    <Router>
-        <Route path="/main" component={Main} />
-        <Route path="/" component={Login} />
-    </Router>
-</main>
-
-<style>
-    main {
-        text-align: center;
-        padding: 1em;
-        max-width: 240px;
-        margin: 0 auto;
-    }
-
-    @media (min-width: 640px) {
-        main {
-            max-width: none;
-        }
-    }
-</style>
+<div id="app">{Main}</div>

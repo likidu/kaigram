@@ -1,5 +1,5 @@
 // For Airgram
-export const apiId = 273729
-export const apiHash = '0f7a4f1ed6c06469bf0ecf70ce92b49d'
+export const apiId = 2593677
+export const apiHash = 'fbc1cccc956dceb3c49f53078fa63655'
 export const jsLogVerbosityLevel = 'info'
 export const logVerbosityLevel = 2

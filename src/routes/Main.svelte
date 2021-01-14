@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Airgram } from '@airgram/web'
+    import type { Airgram } from '../airgram'
 
     import { getContext } from 'svelte'
     import Dialogs from '../pages/Dialogs.svelte'
@@ -25,7 +25,16 @@
     }
 </script>
 
+<style>
+    h1 {
+        color: #ff3e00;
+        text-transform: uppercase;
+        font-size: 4em;
+        font-weight: 100;
+    }
+</style>
+
 <div>
-    <h2>Main page</h2>
+    <h1>Main page</h1>
     <Dialogs list={dialogs} />
 </div>

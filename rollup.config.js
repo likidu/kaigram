@@ -13,7 +13,7 @@ import del from 'rollup-plugin-delete'
 const production = !process.env.ROLLUP_WATCH
 
 export default {
-    input: 'src/main.ts',
+    input: 'src/index.ts',
     output: {
         sourcemap: !production,
         format: 'iife',

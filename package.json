@@ -26,6 +26,7 @@
     "svelte": "^3.31.0",
     "svelte-check": "^1.1.24",
     "svelte-preprocess": "^4.6.1",
+    "svelte-routing": "^1.5.0",
     "tdweb": "file:./tdweb",
     "tslib": "^2.0.3",
     "typescript": "^4.1.3"
