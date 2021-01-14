@@ -8,15 +8,13 @@
             "name": "Launch localhost",
             "type": "firefox",
             "request": "launch",
-            "reAttach": true,
-            "url": "http://localhost:5000",
+            "url": "http://localhost:5000/",
             "webRoot": "${workspaceFolder}",
+            "skipFiles": [
+                "**/bundle.js",
+                "**/localhost:35729/**"
+            ],
             "firefoxArgs": ["--devtools"]
-        },
-        {
-            "name": "Attach",
-            "type": "firefox",
-            "request": "attach"
         }
     ]
 }
