@@ -1,0 +1,48 @@
+{
+    "version": "0.1.0",
+    "name": "Kaigram",
+    "description": "Telegram app for KaiOS",
+    "type": "privileged",
+    "csp": "default-src *; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'",
+    "launch_path": "/index.html",
+    "icons": {
+        "56": "/assets/icons/56px.png",
+        "84": "/assets/icons/84px.png",
+        "112": "/assets/icons/112px.png"
+    },
+    "developer": {
+        "name": "Liya Du",
+        "url": "https://liya.design/"
+    },
+    "categories": ["social"],
+    "locales": {
+        "en-US": {
+            "name": "22PM",
+            "subtitle": "Telegram app for KaiOS",
+            "description": "Telegram app for KaiOS"
+        }
+    },
+    "default_locale": "en-US",
+    "origin": "app://kaios.liya.design",
+    "permissions": {
+        "audio-channel-content": {
+            "description": "Required to play audio in the background."
+        },
+        "systemXHR": {
+            "description": "Required to download podcasts and perform other vital functions."
+        },
+        "desktop-notification": {
+            "description": "Required to display episode information and playback controls in the notification panel."
+        },
+        "device-storage:music": {
+            "access": "readwrite",
+            "description": "Required to read and write podcasts episodes."
+        },
+        "device-storage:sdcard": {
+            "access": "readwrite",
+            "description": "Required to read and write podcasts episodes to external storage."
+        },
+        "mobiledata": {},
+        "wifidata": {}
+    }
+}

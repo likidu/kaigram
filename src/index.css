@@ -1,0 +1,60 @@
+@tailwind base;
+
+@layer base {
+    h1 {
+        @apply text-base;
+    }
+    h2 {
+        @apply font-semibold;
+    }
+    h3 {
+        @apply text-sm;
+    }
+    h4 {
+        @apply text-sm;
+    }
+    h5 {
+        @apply font-semibold text-sm;
+    }
+    a {
+        @apply text-shakespeare-700 underline;
+    }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+    font-family: 'Helvetica Neue', arial, sans-serif;
+    font-weight: 400;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+    height: 100%;
+}
+
+/* Softkey height: 30px */
+.softkey {
+    @apply absolute bottom-0 h-30 flex items-center w-full max-w-full z-200;
+}
+
+/* Popup container bottom: 30 */
+.popup-entity {
+    @apply absolute overflow-hidden inset-x-0 bottom-30 max-h-3/4;
+}
+
+.shader {
+    @apply absolute inset-0 bg-black opacity-95;
+}
+
+.tab {
+    @apply text-secondary text-gray-400 px-2 no-underline;
+}
+
+.tab-active {
+    @apply text-gray-700;
+}
