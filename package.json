@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "build": "NODE_ENV=production preact build --no-prerender && cp manifest.webapp ./build/.",
+    "build": "NODE_ENV=production preact build --no-prerender",
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "NODE_ENV=development preact watch --no-prerender",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
@@ -21,12 +21,14 @@
     ]
   },
   "dependencies": {
+    "history": "^4.10.1",
     "preact": "^10.5.12",
     "preact-render-to-string": "^5.1.12",
     "preact-router": "^3.2.1"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.8",
+    "@types/history": "^4.7.8",
     "@types/jest": "^26.0.20",
     "@types/tdweb": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",

@@ -1,4 +1,5 @@
-import { join } from 'path'
+import { join, resolve } from 'path'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 export default {
     /**
@@ -11,8 +12,15 @@ export default {
      * @param {object} options - this is mainly relevant for plugins (will always be empty in the config), default to an empty object
      **/
     webpack(config, env, helpers, options) {
-        // Also including the tdweb folder for DevServer
+        // Remove default PostCSS options and use postcss.config.js instead
+        const postCssLoaders = helpers.getLoadersByName(
+            config,
+            'postcss-loader',
+        )
+        postCssLoaders.forEach(({ loader }) => delete loader.options)
+
         if (!env.production) {
+            // Also including the tdweb folder for DevServer
             Object.assign(config.devServer, {
                 contentBase: [
                     join(__dirname, '/src'),
@@ -21,11 +29,21 @@ export default {
             })
         }
 
-        // Remove default PostCSS options and use postcss.config.js instead
-        const postCssLoaders = helpers.getLoadersByName(
-            config,
-            'postcss-loader',
-        )
-        postCssLoaders.forEach(({ loader }) => delete loader.options)
+        if (env.production) {
+            // Copy files to build folder
+            config.plugins.push(
+                new CopyWebpackPlugin([
+                    {
+                        from: 'manifest.webapp',
+                        context: resolve(__dirname, 'src'),
+                    },
+                    {
+                        from: '*',
+                        context: resolve(__dirname, 'tdweb/dist'),
+                        globOptions: { ignore: 'tdweb.js' },
+                    },
+                ]),
+            )
+        }
     },
 }
