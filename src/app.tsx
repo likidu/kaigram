@@ -6,7 +6,17 @@ import Home from './routes/Home'
 import Auth from './routes/Auth'
 import NotFoundPage from './routes/NotFound'
 
+declare module 'preact' {
+    namespace createElement.JSX {
+        interface IntrinsicAttributes {
+            path?: string
+        }
+    }
+}
+
 const App: FunctionalComponent = () => {
+    const authorizationState = ''
+
     const handleRouteChange = (e: RouterOnChangeArgs) => {
         const { url } = e
         const isAuthed = localStorage.getItem('authed')
@@ -18,8 +28,8 @@ const App: FunctionalComponent = () => {
     return (
         <div id="app" class="font-kaios h-screen relative flex flex-col">
             <Router history={createHashHistory()} onChange={handleRouteChange}>
-                <Route path="/" component={Home} />
-                <Route path="/auth" component={Auth} />
+                <Home path="/" />
+                <Auth path="/auth" state={authorizationState} />
                 <NotFoundPage default />
             </Router>
         </div>

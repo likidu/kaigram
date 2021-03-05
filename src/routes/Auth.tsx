@@ -5,10 +5,10 @@ import { observer } from 'mobx-react'
 import { Button, Content, Input } from '../components'
 
 interface AuthProps {
-    hello: string
+    state: string
 }
 
-const Auth = observer(() => {
+const Auth = observer(({ state }: AuthProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const formRef = useRef<HTMLDivElement>(null)
 

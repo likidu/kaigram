@@ -1,13 +1,12 @@
 import { FunctionalComponent, h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
-import Tg from '../tg'
+import tg from '../tg'
 
 const Home: FunctionalComponent = () => {
     const [started, setStarted] = useState(false)
 
     useEffect(() => {
-        const client = new Tg()
-        client.action = () => setStarted(true)
+        tg.action = () => setStarted(true)
     }, [])
 
     return (

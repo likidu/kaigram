@@ -9,7 +9,7 @@ export enum LoginState {
     Ready,
 }
 
-export class State {
+export class AuthStore {
     loginState: LoginState
 
     constructor() {
