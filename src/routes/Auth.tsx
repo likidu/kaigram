@@ -1,6 +1,8 @@
-import { FunctionalComponent, h } from 'preact'
-import { useRef, useState } from 'preact/hooks'
+import { h } from 'preact'
+import { useContext, useRef, useState } from 'preact/hooks'
 import { observer } from 'mobx-react'
+
+import { AirgramContext } from '../airgram'
 
 import { Button, Content, Input } from '../components'
 
@@ -12,7 +14,25 @@ const Auth = observer(({ state }: AuthProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const formRef = useRef<HTMLDivElement>(null)
 
+    const airgram = useContext(AirgramContext)
+
     const [phone, setPhone] = useState('')
+
+    airgram.use(async (ctx, next) => {
+        if ('request' in ctx) {
+            console.log('🚀 [Airgram Request]:', ctx.request)
+        } else if (ctx.update) {
+            console.log('🚀 [Airgram Update]:', ctx.update)
+        }
+        await next()
+        if ('request' in ctx) {
+            console.log(
+                '🚀 [Airgram Response]:',
+                ctx.request.method,
+                ctx.response,
+            )
+        }
+    })
 
     const handlePhoneInput = (e: Event) => {
         if (e.target instanceof HTMLInputElement) {

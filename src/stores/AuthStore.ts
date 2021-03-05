@@ -19,13 +19,13 @@ export class AuthStore {
         this.loginState = LoginState.WaitTDLib
     }
 
-    merge = update => {
-        switch (update['@type']) {
-            case 'updateAuthorizationState':
-                break
+    // merge = update => {
+    //     switch (update['@type']) {
+    //         case 'updateAuthorizationState':
+    //             break
 
-            default:
-                break
-        }
-    }
+    //         default:
+    //             break
+    //     }
+    // }
 }
