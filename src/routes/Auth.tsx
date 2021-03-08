@@ -2,37 +2,20 @@ import { h } from 'preact'
 import { useContext, useRef, useState } from 'preact/hooks'
 import { observer } from 'mobx-react'
 
-import { AirgramContext } from '../airgram'
-
 import { Button, Content, Input } from '../components'
+import { AuthStoreProps, LoginState } from '../stores/AuthStore'
 
 interface AuthProps {
-    state: string
+    auth: AuthStoreProps
 }
 
-const Auth = observer(({ state }: AuthProps) => {
+const Auth = observer(({ auth }: AuthProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const formRef = useRef<HTMLDivElement>(null)
 
-    const airgram = useContext(AirgramContext)
-
     const [phone, setPhone] = useState('')
 
-    airgram.use(async (ctx, next) => {
-        if ('request' in ctx) {
-            console.log('🚀 [Airgram Request]:', ctx.request)
-        } else if (ctx.update) {
-            console.log('🚀 [Airgram Update]:', ctx.update)
-        }
-        await next()
-        if ('request' in ctx) {
-            console.log(
-                '🚀 [Airgram Response]:',
-                ctx.request.method,
-                ctx.response,
-            )
-        }
-    })
+    const { loginState } = auth
 
     const handlePhoneInput = (e: Event) => {
         if (e.target instanceof HTMLInputElement) {
@@ -41,7 +24,10 @@ const Auth = observer(({ state }: AuthProps) => {
         }
     }
 
-    const handleNext = () => {}
+    const handleNext = () => {
+        if (loginState === LoginState.WaitPhoneNumber) {
+        }
+    }
     return (
         <Content containerRef={containerRef}>
             <header class="text-center">
@@ -49,14 +35,16 @@ const Auth = observer(({ state }: AuthProps) => {
                 <h1 class="text-xl">Kaigram</h1>
             </header>
             <main ref={formRef}>
-                <Input
-                    type="tel"
-                    label="Enter your phone number to log in"
-                    name="phoneInput"
-                    placeholder="Your phone number"
-                    value={phone}
-                    handleInput={handlePhoneInput}
-                />
+                {loginState === LoginState.WaitPhoneNumber && (
+                    <Input
+                        type="tel"
+                        label="Enter your phone number to log in"
+                        name="phoneInput"
+                        placeholder="Your phone number"
+                        value={phone}
+                        handleInput={handlePhoneInput}
+                    />
+                )}
                 <Button text="Next" handleClick={handleNext} uid="next" />
             </main>
         </Content>

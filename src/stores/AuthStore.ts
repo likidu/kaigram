@@ -1,4 +1,14 @@
 import { makeObservable, observable } from 'mobx'
+import { useContext } from 'preact/hooks'
+
+import {
+    AuthorizationStateUnion,
+    Instance,
+    UpdateAuthorizationState,
+} from '@airgram/core'
+import { AirgramContext } from '../airgram'
+
+import { AUTHORIZATION_STATE } from '@airgram/constants'
 
 export enum LoginState {
     WaitTDLib,
@@ -9,14 +19,36 @@ export enum LoginState {
     Ready,
 }
 
-export class AuthStore {
+export interface AuthStoreProps {
     loginState: LoginState
+}
+
+class AuthStore {
+    private airgram: Instance<any>
+    private authState: AuthorizationStateUnion
 
     constructor() {
         makeObservable(this, {
-            loginState: observable,
+            authState: observable,
         })
-        this.loginState = LoginState.WaitTDLib
+        this.airgram = useContext(AirgramContext)
+        this.authState = {
+            _: AUTHORIZATION_STATE.authorizationStateWaitTdlibParameters,
+        }
+    }
+
+    private onUpdate = ({
+        authorizationState,
+    }: UpdateAuthorizationState): boolean => {
+        switch (authorizationState._) {
+            case AUTHORIZATION_STATE.authorizationStateWaitPhoneNumber:
+                this.airgram.api.setAuthenticationPhoneNumber({ phone })
+                break
+            case AUTHORIZATION_STATE.authorizationStateWaitCode:
+                this.airgram.api.checkAuthenticationCode({ code })
+            default:
+                return false
+        }
     }
 
     // merge = update => {
@@ -29,3 +61,6 @@ export class AuthStore {
     //     }
     // }
 }
+
+const store = new AuthStore()
+export default store
