@@ -1,0 +1,49 @@
+{
+    "lang": "en-US",
+    "name": "Kaigram",
+    "id": "Kaigram",
+    "short_name": "kaigram",
+    "categories": ["social"],
+    "description":
+      "Telegram on KaiOS",
+    "icons": [
+      {
+        "src": "/icons/kaios_56.png",
+        "type": "image/png",
+        "sizes": "56x56"
+      },
+      {
+        "src": "/icons/kaios_112.png",
+        "type": "image/png",
+        "sizes": "112x112"
+      }
+    ],
+    "start_url": "/index.html",
+    "theme_color": "#ffffff",
+    "orientation": "natural",
+    "b2g_features": {
+      "version": "0.1.0",
+      "type": "signed",
+      "subtitle": "Kaigram",
+      "developer": {
+        "name": "Liya Design",
+        "url": "http://liya.design"
+      },
+      "csp": "default-src *; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'",
+      "permissions": {
+        "browser": {
+            "description": "Required to authenticate with Azure Active Directory."
+        },
+        "desktop-notification": {
+            "description": "Required to display episode information and playback controls in the notification panel."
+        },
+        "systemXHR": {
+            "description": "Required to bypass CORS limitations."
+        },
+        "mobiledata": {},
+        "wifidata": {},
+        "geolocation": {}
+      },
+      "focus_color": "#6054EF"
+    }
+  }

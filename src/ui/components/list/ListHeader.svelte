@@ -1,0 +1,45 @@
+<script lang="ts">
+  import { settings } from '../../stores';
+
+  export let title: string;
+  export let helpText: string = undefined;
+</script>
+
+<div class="root">
+  <div class="row">
+    <div class="title">{title}</div>
+    <div class="divider" />
+  </div>
+  {#if $settings.showHelpText && helpText}
+    <div class="info">{helpText}</div>
+  {/if}
+</div>
+
+<style>
+  .root {
+    padding: 20px 7px 10px 7px;
+  }
+  .root:first-of-type {
+    padding: 10px 7px 10px 7px;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+  }
+  .title {
+    font-weight: var(--bold-font-weight);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    padding-right: 7px;
+  }
+  .divider {
+    background-color: var(--accent-color);
+    height: 1px;
+    flex: 1;
+  }
+  .info {
+    margin-top: 5px;
+    margin-bottom: -5px;
+  }
+</style>

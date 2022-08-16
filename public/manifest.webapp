@@ -1,0 +1,51 @@
+{
+  "name": "Kaido",
+  "description": "A Microsoft To-do app for KaiOS",
+  "version": "0.1.0",
+  "launch_path": "/index.html",
+  "icons": {
+    "56": "/icons/kaios_56.png",
+    "112": "/icons/kaios_112.png"
+  },
+  "theme_color": "#FFFFFF",
+  "developer": {
+    "name": "Liya Design",
+    "url": "http://liya.design"
+  },
+  "type": "privileged",
+  "origin": "app://kaido.liya.design",
+  "redirects": [
+    {
+      "from": "https://login.microsoftonline.com/common/oauth2/nativeclient",
+      "to": "/index.html"
+    },
+    {
+      "from": "https://login.microsoftonline.com/common/oauth2/v2.0/logoutsession",
+      "to": "/index.html"
+    }
+  ],
+  "permissions": {
+    "browser": {
+      "description": "Required to authenticate with Azure Active Directory."
+    },
+    "systemXHR": {
+      "description": "Required to download podcasts and perform other vital functions."
+    },
+    "desktop-notification": {
+      "description": "Required to display episode information and playback controls in the notification panel."
+    },
+    "spatialnavigation-app-manage": {},
+    "serviceworker": {},
+    "mobiledata": {},
+    "wifidata": {},
+    "geolocation": {}
+  },
+  "default_locale": "en",
+  "locales": {
+    "en-US": {
+      "name": "Kaido",
+      "subtitle": "Kaido",
+      "description": "A Microsoft To-do app for KaiOS"
+    }
+  }
+}
