@@ -1,6 +1,12 @@
 {
-    "tabWidth": 4,
-    "singleQuote": true,
-    "semi": false,
-    "trailingComma": "all"
+	"useTabs": false,
+	"tabWidth": 4,
+	"singleQuote": true,
+	"trailingComma": "all",
+	"printWidth": 100,
+	"svelteSortOrder": "options-styles-scripts-markup",
+	"svelteStrictMode": true,
+	"svelteBracketNewLine": false,
+	"svelteAllowShorthand": false,
+	"svelteIndentScriptAndStyle": false
 }

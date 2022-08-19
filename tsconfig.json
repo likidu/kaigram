@@ -14,9 +14,7 @@
       "DOM"
     ]
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["globals.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
   "exclude": [
     "node_modules/*",
     "__sapper__/*",
