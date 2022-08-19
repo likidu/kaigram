@@ -8,8 +8,8 @@
     "validate": "svelte-check"
   },
   "devDependencies": {
-    "@airgram/constants": "^3.0.0",
-    "@airgram/core": "^4.0.0",
+    "@airgram/constants": "^4.0.0",
+    "@airgram/core": "^5.0.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
