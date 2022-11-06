@@ -1,34 +1,27 @@
 <script lang="ts">
+  import { OnyxKeys } from 'onyx-keys';
   import { onDestroy } from 'svelte';
-  import { Priority, RenderState } from '../../enums';
-  import { KeyManager } from '../../services';
+  import { RenderState } from '../../enums';
   import { dialog } from '../../stores';
   import NavGroup from '../nav/NavGroup.svelte';
 
-  let keyMan = KeyManager.subscribe(
-    {
-      onSoftLeft: () => {
-        $dialog.data.actions.left?.fn();
-        dialog.close();
-        return true;
-      },
-      onSoftRight: () => {
-        $dialog.data.actions.right?.fn();
-        dialog.close();
-        return true;
-      },
-      onEnter: () => {
-        $dialog.data.actions.center?.fn();
-        dialog.close();
-        return true;
-      },
-      onBackspace: () => {
-        dialog.close();
-        return true;
-      },
+  let keyMan = OnyxKeys.subscribe({
+    onSoftLeft: async () => {
+      $dialog.data.actions.left?.fn();
+      dialog.close();
     },
-    Priority.Medium
-  );
+    onSoftRight: async () => {
+      $dialog.data.actions.right?.fn();
+      dialog.close();
+    },
+    onEnter: async () => {
+      $dialog.data.actions.center?.fn();
+      dialog.close();
+    },
+    onBackspace: async () => {
+      dialog.close();
+    },
+  });
 
   onDestroy(() => keyMan.unsubscribe());
 </script>
@@ -37,7 +30,7 @@
   <div class="scrim" class:open={$dialog.state === RenderState.Open} />
   <div class="card" class:open={$dialog.state >= RenderState.Open}>
     <div class="title">{$dialog.data.title}</div>
-    <div class="body" data-nav-scroller>{$dialog.data.body || ''}</div>
+    <div class="body" data-onyx-scroller>{$dialog.data.body || ''}</div>
     <div class="footer">
       <div>{$dialog.data.actions.left?.label || ''}</div>
       <div>{$dialog.data.actions.center?.label || ''}</div>
@@ -47,7 +40,7 @@
 </NavGroup>
 
 <style>
-  :global([data-nav-group-id='dialog']) {
+  :global([data-onyx-group-id='dialog']) {
     position: absolute;
     top: 0;
     right: 0;

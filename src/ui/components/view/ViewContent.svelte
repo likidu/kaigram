@@ -1,8 +1,11 @@
 <script lang="ts">
+  import NavGroup from '../nav/NavGroup.svelte';
 </script>
 
 <div class="root">
-  <slot />
+  <NavGroup groupId="view">
+    <slot />
+  </NavGroup>
 </div>
 
 <style>

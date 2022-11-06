@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { OnyxKeys } from 'onyx-keys';
   import { onDestroy } from 'svelte';
   import MdChevronLeft from 'svelte-icons/md/MdChevronLeft.svelte';
   import MdChevronRight from 'svelte-icons/md/MdChevronRight.svelte';
-  import { IconSize, Priority } from '../../enums';
-  import { KeyManager } from '../../services';
+  import { IconSize } from '../../enums';
   import Icon from '../icon/Icon.svelte';
 
   export let value: number;
@@ -13,32 +13,22 @@
   export let onChange: (val: number) => void;
   export let disabled = false;
 
-  let keyMan = KeyManager.subscribe(
+  let keyMan = OnyxKeys.subscribe(
     {
-      onArrowLeft: () => {
+      onArrowLeft: async () => {
         const num = value - 1;
         if (num >= min) {
           onChange(num);
         }
-        return true;
       },
-      onArrowLeftLong: () => {
-        onChange(min);
-        return true;
-      },
-      onArrowRight: () => {
+      onArrowRight: async () => {
         const num = value + 1;
         if (num <= max) {
           onChange(num);
         }
-        return true;
-      },
-      onArrowRightLong: () => {
-        onChange(max);
-        return true;
       },
     },
-    Priority.High
+    { priority: 4 }
   );
   $: {
     if (disabled) {

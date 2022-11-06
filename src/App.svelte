@@ -7,8 +7,8 @@ import { AIRGRAM_CONFIG } from './app/const';
 
 import routes from './routes';
 
-import OnyxApp from './ui/components/frame/OnyxApp.svelte';
-import Dashboard from './ui/components/frame/Dashboard.svelte';
+import OnyxApp from './ui/components/app/OnyxApp.svelte';
+import Dashboard from './ui/components/app/Dashboard.svelte';
 
 const airgram = new Airgram(AIRGRAM_CONFIG);
 

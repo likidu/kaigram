@@ -13,6 +13,8 @@ const defaultConfig: Config = {
   borderRadius: 14,
   animationSpeed: Animations.Normal,
   showHelpText: true,
+  useAppMenu: true,
+  appMenuWidth: 85,
   // Shortcuts
   enableShortcutKeys: true,
   shortcutKeyLocation: 'right',

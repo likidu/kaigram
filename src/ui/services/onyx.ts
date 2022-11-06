@@ -1,5 +1,6 @@
 import type { Alert, BaseSettings, ContextMenu, Dialog, Toast } from '../models';
-import { alert, appMenu, contextMenu, dialog, settings, toaster } from '../stores';
+import { alert, appMenu, contextMenu, dialog, settings } from '../stores';
+import { toaster } from '../stores/toaster';
 
 export class Onyx {
   static init(settings: Partial<BaseSettings>) {
@@ -15,6 +16,10 @@ export class Onyx {
 
   // App Menu
   static appMenu = {
+    isOpen() {
+      return appMenu.isOpen();
+    },
+
     async open() {
       await contextMenu.close();
       await appMenu.open();
@@ -27,6 +32,10 @@ export class Onyx {
 
   // Context Menu
   static contextMenu = {
+    isOpen() {
+      return contextMenu.isOpen();
+    },
+
     async open(menu: ContextMenu) {
       await appMenu.close();
       await contextMenu.open(menu);
@@ -58,6 +67,10 @@ export class Onyx {
       alert.open(data);
     },
 
+    close() {
+      alert.close();
+    },
+
     reset() {
       alert.reset();
     },
@@ -67,6 +80,10 @@ export class Onyx {
   static dialog = {
     show(data: Dialog) {
       dialog.open(data);
+    },
+
+    close() {
+      dialog.close();
     },
 
     reset() {

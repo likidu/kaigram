@@ -8,6 +8,8 @@ export type BaseSettings = ThemeSettings & {
   borderRadius: number;
   animationSpeed: Animations;
   themeId: string;
+  useAppMenu: boolean;
+  appMenuWidth: number;
   // Shortcuts
   enableShortcutKeys: boolean;
   shortcutKeyLocation: 'left' | 'right' | 'hidden';

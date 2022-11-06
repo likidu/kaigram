@@ -13,7 +13,7 @@
 </script>
 
 <NavItem {navi} {disabled}>
-  <button type="button" class="root" style={`color: ${color};`} {disabled}>
+  <button class="root" style={`color: ${color};`} {disabled}>
     {#if icon}
       <div class="icon">
         <Icon size={IconSize.Small} {color}><svelte:component this={icon} /></Icon>
