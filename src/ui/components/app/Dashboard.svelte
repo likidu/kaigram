@@ -1,6 +1,6 @@
-<main class="root">
+<div class="root">
   <slot />
-</main>
+</div>
 
 <style>
   .root {

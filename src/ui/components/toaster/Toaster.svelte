@@ -25,25 +25,25 @@
   >
     {#if $toaster.data.type === 'info'}
       <div class="icon">
-        <Icon size={IconSize.Small} color="var(--app-text-color)">
+        <Icon size={IconSize.Smallest} color="var(--app-text-color)">
           <svelte:component this={$toaster.data.icon || MdInfoOutline} />
         </Icon>
       </div>
     {:else if $toaster.data.type === 'warning'}
       <div class="icon">
-        <Icon size={IconSize.Small} color="var(--warning-color)">
+        <Icon size={IconSize.Smallest} color="var(--warning-color)">
           <svelte:component this={$toaster.data.icon || MdWarning} />
         </Icon>
       </div>
     {:else if $toaster.data.type === 'error'}
       <div class="icon">
-        <Icon size={IconSize.Small} color="var(--error-color)">
+        <Icon size={IconSize.Smallest} color="var(--error-color)">
           <svelte:component this={$toaster.data.icon || MdErrorOutline} />
         </Icon>
       </div>
     {:else if $toaster.data.type === 'success'}
       <div class="icon">
-        <Icon size={IconSize.Small} color="var(--success-color)">
+        <Icon size={IconSize.Smallest} color="var(--success-color)">
           <svelte:component this={$toaster.data.icon || MdCheck} />
         </Icon>
       </div>

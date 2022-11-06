@@ -1,15 +1,11 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte';
   import { v4 as uuidv4 } from 'uuid';
   import { focus } from '../../actions/focus';
-  import FormRow from './FormRow.svelte';
+  import NavItem from '../nav/NavItem.svelte';
 
-  export let label: string = null;
-  export let icon: typeof SvelteComponent = null;
   export let value: string;
   export let placeholder: string = undefined;
   export let disabled = false;
-  export let align: 'left' | 'right' | 'edges' = 'edges';
   export let onChange: (val: string) => void;
   export let onSubmit: () => void = undefined;
 
@@ -21,11 +17,8 @@
   }
 </script>
 
-<FormRow
-  {icon}
-  {label}
+<NavItem
   {disabled}
-  {align}
   navi={{
     itemId,
     onFocus: () => (focused = true),
@@ -54,7 +47,7 @@
       {value}
     </div>
   {/if}
-</FormRow>
+</NavItem>
 
 <style>
   .input,
@@ -65,9 +58,11 @@
     flex-direction: column;
     justify-content: center;
     outline: none;
-    padding: 0 2px;
+    padding: 5px;
+    margin: 0 5px;
+    border-bottom: 2px solid var(--accent-color);
   }
   .placeholder {
-    opacity: 0.5;
+    opacity: 0.3;
   }
 </style>

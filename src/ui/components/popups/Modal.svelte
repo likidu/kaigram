@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { OnyxKeys } from 'onyx-keys';
   import { onDestroy } from 'svelte';
-  import { Priority, RenderState } from '../../enums';
-  import { KeyManager } from '../../services';
+  import { RenderState } from '../../enums';
   import { settings } from '../../stores';
   import { delay } from '../../utils';
 
@@ -56,26 +56,20 @@
     onClose();
   }
 
-  let keyMan = KeyManager.subscribe(
-    {
-      onSoftLeft: () => {
-        actions.left?.actionFn?.();
-        closeModal();
-        return true;
-      },
-      onSoftRight: () => {
-        actions.right?.actionFn?.();
-        closeModal();
-        return true;
-      },
-      onEnter: () => {
-        actions.center?.actionFn?.();
-        closeModal();
-        return true;
-      },
+  let keyMan = OnyxKeys.subscribe({
+    onSoftLeft: async () => {
+      actions.left?.actionFn?.();
+      closeModal();
     },
-    Priority.Medium
-  );
+    onSoftRight: async () => {
+      actions.right?.actionFn?.();
+      closeModal();
+    },
+    onEnter: async () => {
+      actions.center?.actionFn?.();
+      closeModal();
+    },
+  });
 
   $: {
     if (state < RenderState.Open) {

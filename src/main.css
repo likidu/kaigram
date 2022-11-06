@@ -1,87 +1,82 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  /* Uesr defined */
-  --svelte-rgb: 255, 62, 0;
+  /* User Defined */
 
-    /* User Defined */
+  --card-color-h: 210;
+  --card-color-s: 13%;
+  --card-color-l: 99%;
 
-    --card-color-h: 210;
-    --card-color-s: 13%;
-    --card-color-l: 99%;
-  
-    --accent-color-h: 232;
-    --accent-color-s: 64%;
-    --accent-color-l: 54%;
-  
-    --text-color-h: 0;
-    --text-color-s: 0%;
-    --text-color-l: 0%;
-  
-    --focus-color-a: 0.2;
-    --divider-color-a: 0.2;
-  
-    --radius: 14px;
-    --animation-speed: 300ms;
-    --regular-font-weight: 400;
-    --bold-font-weight: 600;
-    --base-font-size: 10px;
-  
-    /* Computed */
-  
-    --default-a: 1;
-    --primary-text-a: 0.88;
-    --secondary-text-a: 0.5;
-  
-    --app-bg-color: hsla(0, 0%, 0%, 1);
-    --app-text-color: hsla(0, 0%, 100%, 0.88);
-  
-    --text-color: hsla(
-      var(--text-color-h),
-      var(--text-color-s),
-      var(--text-color-l),
-      var(--primary-text-a)
-    );
-    --secondary-text-color: hsla(
-      var(--text-color-h),
-      var(--text-color-s),
-      var(--text-color-l),
-      var(--secondary-text-a)
-    );
-    --divider-color: hsla(
-      var(--text-color-h),
-      var(--text-color-s),
-      var(--text-color-l),
-      var(--divider-color-a)
-    );
-    --accent-color: hsla(
-      var(--accent-color-h),
-      var(--accent-color-s),
-      var(--accent-color-l),
-      var(--default-a)
-    );
-    --focus-color: hsla(
-      var(--accent-color-h),
-      var(--accent-color-s),
-      var(--accent-color-l),
-      var(--focus-color-a)
-    );
-    --card-color: hsla(
-      var(--card-color-h),
-      var(--card-color-s),
-      var(--card-color-l),
-      var(--default-a)
-    );
-    --card-border-color: hsla(0, 0%, 100%, 0.2);
-    --shortcut-color: var(--secondary-text-color);
-  
-    font-size: var(--base-font-size);
+  --accent-color-h: 232;
+  --accent-color-s: 64%;
+  --accent-color-l: 54%;
+
+  --text-color-h: 0;
+  --text-color-s: 0%;
+  --text-color-l: 0%;
+
+  --focus-color-a: 0.2;
+  --divider-color-a: 0.2;
+
+  --radius: 14px;
+  --animation-speed: 300ms;
+  --regular-font-weight: 400;
+  --bold-font-weight: 600;
+  --base-font-size: 10px;
+
+  /* Computed */
+
+  --default-a: 1;
+  --primary-text-a: 0.88;
+  --secondary-text-a: 0.5;
+
+  --app-bg-color: hsla(0, 0%, 0%, 1);
+  --app-text-color: hsla(0, 0%, 100%, 0.88);
+
+  --text-color: hsla(
+    var(--text-color-h),
+    var(--text-color-s),
+    var(--text-color-l),
+    var(--primary-text-a)
+  );
+  --secondary-text-color: hsla(
+    var(--text-color-h),
+    var(--text-color-s),
+    var(--text-color-l),
+    var(--secondary-text-a)
+  );
+  --divider-color: hsla(
+    var(--text-color-h),
+    var(--text-color-s),
+    var(--text-color-l),
+    var(--divider-color-a)
+  );
+  --accent-color: hsla(
+    var(--accent-color-h),
+    var(--accent-color-s),
+    var(--accent-color-l),
+    var(--default-a)
+  );
+  --focus-color: hsla(
+    var(--accent-color-h),
+    var(--accent-color-s),
+    var(--accent-color-l),
+    var(--focus-color-a)
+  );
+  --card-color: hsla(
+    var(--card-color-h),
+    var(--card-color-s),
+    var(--card-color-l),
+    var(--default-a)
+  );
+  --card-border-color: hsla(0, 0%, 100%, 0.2);
+  --shortcut-color: var(--secondary-text-color);
+
+  font-size: var(--base-font-size);
 }
 
 html,
 body {
+  height: 100%;
+  width: 100%;
   padding: 0;
   margin: 0;
   background: var(--app-bg-color);
@@ -101,10 +96,6 @@ body {
   box-sizing: border-box;
 }
 
-#app {
-  height: 100%;
-}
-
 h1,
 h2,
 h3,
@@ -118,4 +109,8 @@ input {
   border: none;
   outline: none;
   border-bottom: 1px solid var(--accent-color);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

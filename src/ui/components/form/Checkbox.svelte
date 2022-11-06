@@ -1,4 +1,5 @@
 <script lang="ts">
+  // TODO: Remove svelte-icons dependency
   import MdCheck from 'svelte-icons/md/MdCheck.svelte';
   import { Color } from '../../enums';
   import Icon from '../icon/Icon.svelte';

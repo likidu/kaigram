@@ -4,4 +4,6 @@ export type Navigation = {
   onFocus?: () => void;
   onBlur?: () => void;
   onSelect?: () => void;
+  onSoftLeft?: () => void;
+  onSoftRight?: () => void;
 };

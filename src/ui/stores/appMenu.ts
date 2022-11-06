@@ -39,11 +39,16 @@ function createStore() {
     store.update((val) => ({ ...val, state: RenderState.Destroyed }));
   }
 
+  function isOpen(): boolean {
+    return get(store).state !== RenderState.Destroyed;
+  }
+
   return {
     subscribe: store.subscribe,
     open,
     close,
     reset,
+    isOpen,
   };
 }
 

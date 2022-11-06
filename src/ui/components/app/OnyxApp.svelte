@@ -1,53 +1,29 @@
 <script lang="ts">
-  import { Priority, RenderState, TextSize, TextWeight, ViewState } from '../../enums';
-  import { Onyx, KeyManager } from '../../services';
+  import { OnyxKeys } from 'onyx-keys';
+  import { OnyxNavigation } from 'onyx-navigation';
+  import { RenderState, TextSize, TextWeight } from '../../enums';
+  import { Onyx } from '../../services';
   import { alert, appMenu, contextMenu, dialog, settings, toaster } from '../../stores';
-  import { updateView, view } from '../../stores/view';
   import { applyTheme } from '../../themes';
-
   import ContextMenu from '../contextMenu/ContextMenu.svelte';
   import Alert from '../popups/Alert.svelte';
   import Dialog from '../popups/Dialog.svelte';
   import Toaster from '../toaster/Toaster.svelte';
 
-  KeyManager.startListening();
+  OnyxNavigation.startListening();
 
-  const keyMan = KeyManager.subscribe(
+  const keyMan = OnyxKeys.subscribe(
     {
-      onSoftLeft: () => {
+      onSoftLeft: async () => {
+        if (!$settings.useAppMenu) return;
         if ($appMenu.state === RenderState.Destroyed) {
           Onyx.appMenu.open();
         } else if ($appMenu.state === RenderState.Open) {
           Onyx.appMenu.close();
         }
-        return true;
       },
-      onSoftLeftLong: () => {
-        if ($view.viewing === ViewState.Card && $view.cards.length > 1) {
-          updateView({ viewing: ViewState.Stack });
-        } else {
-          updateView({ viewing: ViewState.Card });
-        }
-        return true;
-      },
-      // onBackspace: () => {
-      //   if ($appMenu.state === RenderState.Open) {
-      //     Onyx.appMenu.close();
-      //     return true;
-      //   }
-
-      //   if ($contextMenu.state === RenderState.Open) {
-      //     Onyx.contextMenu.close();
-      //     return true;
-      //   }
-
-      //   if ($view.viewing === ViewState.Stack) {
-      //     updateView({ viewing: ViewState.Card });
-      //     return true;
-      //   }
-      // },
     },
-    Priority.Low
+    { priority: 2 }
   );
 
   // Apply settings
@@ -101,10 +77,13 @@
       '--animation-speed',
       `${$settings.animationSpeed}ms`
     );
+
+    // App Menu
+    document.documentElement.style.setProperty('--app-menu-width', `${$settings.appMenuWidth}vw`);
   }
 </script>
 
-<main class="root">
+<div class="root">
   <div class="view">
     <slot />
   </div>
@@ -131,9 +110,9 @@
   {#if $dialog.state !== RenderState.Destroyed}
     <Dialog />
   {/if}
-</main>
+</div>
 
-<style lang="postcss">
+<style>
   .root {
     display: flex;
     flex-direction: column;
@@ -173,7 +152,7 @@
     transition: transform var(--animation-speed);
     transition-timing-function: ease-in;
     height: 100vh;
-    width: 85vw;
+    width: var(--app-menu-width);
   }
 
   .menu.open {

@@ -1,11 +1,10 @@
 <script lang="ts">
+  import { OnyxKeys } from 'onyx-keys';
   import { onDestroy } from 'svelte';
   import MdChevronLeft from 'svelte-icons/md/MdChevronLeft.svelte';
   import MdChevronRight from 'svelte-icons/md/MdChevronRight.svelte';
-  import { Priority } from '../../enums';
   import { IconSize } from '../../enums/iconSize';
   import type { SelectOption } from '../../models';
-  import { KeyManager } from '../../services/keyManager';
   import { getIndex } from '../../utils';
   import Icon from '../icon/Icon.svelte';
 
@@ -23,30 +22,26 @@
     hasPrev = wrap || !!options[index - 1];
   }
 
-  let keyMan = KeyManager.subscribe(
+  let keyMan = OnyxKeys.subscribe(
     {
-      onArrowLeft: () => {
+      onArrowLeft: async () => {
         const index = options.findIndex((a) => a.id === value);
         const newIndex = getIndex(options, index, -1, wrap);
         onChange(options[newIndex].id);
-        return true;
       },
-      onArrowLeftLong: () => {
+      onArrowLeftLong: async () => {
         onChange(options[0].id);
-        return true;
       },
-      onArrowRight: () => {
+      onArrowRight: async () => {
         const index = options.findIndex((a) => a.id === value);
         const newIndex = getIndex(options, index, 1, wrap);
         onChange(options[newIndex].id);
-        return true;
       },
-      onArrowRightLong: () => {
+      onArrowRightLong: async () => {
         onChange(options[options.length - 1].id);
-        return true;
       },
     },
-    Priority.High
+    { priority: 4 }
   );
   $: {
     if (disabled) {
